@@ -41,7 +41,8 @@ class ModelTests(TestCase):
         Test creating new superuser
         :return: None
         """
-        user = get_user_model().objects.create_superuser('test@email.com', 'test123')
-
+        user = get_user_model().objects.create_superuser(
+            'test@email.com',
+            'test123')
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
