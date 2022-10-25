@@ -5,7 +5,9 @@ from core.models import Tag
 from .serializers import TagSerializer
 
 
-class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class TagViewSet(viewsets.GenericViewSet,
+                 mixins.ListModelMixin,
+                 mixins.CreateModelMixin):
     """
     Manage tags in the database
     """
@@ -20,3 +22,11 @@ class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         :return: List of tags objects
         """
         return self.queryset.filter(user=self.request.user).order_by('-name')
+
+    def perform_create(self, serializer):
+        """
+        Create a new tag
+        :param serializer: tags serializer
+        :return: None
+        """
+        serializer.save(user=self.request.user)
